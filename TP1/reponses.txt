@@ -1,0 +1,65 @@
+TP1 : Inversion de Contrôle (IoC) et Injection de Dépendances avec Spring
+
+
+
+---- Partie 1 – Sans Spring (problème initial) ----
+
+Questions
+1. Où est le couplage fort ?
+
+
+2. Peut-on facilement remplacer EmailSender ?
+
+
+3. Ce code respecte-t-il l’IoC ?
+
+
+
+---- Partie 2 – IoC avec Spring et XML ----
+-- 2.4 Test de l’application -- 
+
+Questions
+1. Qui crée les objets ?
+
+
+2. Où est l’IoC ?
+
+
+3. Comment changer le canal de notification ?
+
+
+-- 2.5 Injection par setter (variante) -- 
+
+Comparaison attendue
+• Injection constructeur vs setter
+
+
+• Avantages / inconvénients
+
+
+---- Partie 4 – Comparaison XML vs Annotations ----
+
+Tableau à compléter
+
+Critère				| 	XML Annotations
+---------------------------------------------------------
+Lisibilité			|	
+Couplage			|	
+Refactoring			|	
+Configuration dynamique		|	
+
+
+
+---- Partie 6 – Questions de réflexion (examen) ----
+
+1. En quoi Spring implémente-t-il l’IoC ?
+
+
+2. Quelle différence entre IoC et DI ?
+
+
+3. Quel pattern GoF est utilisé implicitement ?
+
+
+4. Pourquoi Spring favorise-t-il le constructor injection ?
+
