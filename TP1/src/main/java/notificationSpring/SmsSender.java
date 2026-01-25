@@ -1,8 +1,10 @@
 package notificationSpring;
 
-public class SmsSender implements MessageSender {
+import org.springframework.stereotype.Service;
 
-    public void send(String message){
-        System.out.println("SMS : "+message);
+@Service
+public class SmsSender implements MessageSender {
+    public void send(String message) {
+        System.out.println("SMS : " + message);
     }
 }

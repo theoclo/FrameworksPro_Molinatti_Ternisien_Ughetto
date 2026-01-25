@@ -1,8 +1,10 @@
 package notificationSpring;
 
-public class EmailSender implements MessageSender {
+import org.springframework.stereotype.Service;
 
-    public void send(String message){
-        System.out.println("Email : "+message);
+@Service
+public class EmailSender implements MessageSender {
+    public void send(String message) {
+        System.out.println("Email : " + message);
     }
 }
