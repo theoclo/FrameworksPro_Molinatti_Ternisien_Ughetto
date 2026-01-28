@@ -31,9 +31,11 @@ Questions
 
 Les objets sont créés par le conteneur IoC. Plus précisément, le conteneur crée et gère des beans, c’est-à-dire des objets Java déclarés dans le contexte d’application (ApplicationContext) de Spring, dont il contrôle le cycle de vie et les dépendances.
 
+
 2. Où est l’IoC ?
 
 L’IoC se manifeste par le fait que le conteneur Spring gère la création et l’injection des dépendances des beans. Le fichier applicationContext.xml contient la configuration qui indique au conteneur quels beans doivent être créés (par exemple emailSender et notificationService) et comment les injecter (par exemple injecter le bean emailSender dans la classe NotificationService).
+
 
 3. Comment changer le canal de notification ?
 
@@ -58,6 +60,7 @@ Comparaison attendue
 
 Pour l’injection par constructeur, le bean n’est pas créé tant que la dépendance n’est pas fournie. Pour l’injection par setter, le bean est créé même si la dépendance n’est pas fournie ; le setter est ensuite appelé pour injecter la dépendance. La différence se voit dans les messages d’erreur en cas d’oubli de la dépendance : pour l’injection par constructeur, Spring lance une BeanCreationException, tandis que pour l’injection par setter, on obtient une NullPointerException lors de l’utilisation du bean.
 
+
 Pour l’injection par constructeur, les avantages sont l’immuabilité (la dépendance ne peut pas être changée après la construction) et la détection immédiate d’éventuelles erreurs liées à la dépendance dès la création du bean. L’inconvénient est la rigidité : on ne peut pas changer la dépendance après la création du bean.
 Pour l’injection par setter, l’avantage principal est la flexibilité : la dépendance peut être modifiée après la création du bean, et elle est optionnelle lors de la création. L’inconvénient est le risque d’oubli : si la dépendance n’est pas injectée, cela peut provoquer une NullPointerException lors de l’utilisation du bean (comme vu ci-dessus).
 
@@ -73,10 +76,29 @@ Lisibilité		|	Verbeux
               |  Le fichier XML peut devenir complexe et difficile à naviguer quand le projet grossit avec l’ajout de plus                |  en plus de beans. 
 -------------------------------------------------------------------
 Couplage			|	Couplage faible 
-              | Les classes ne connaissent pas le fichier XML Spring. Elles n’ont aucune dépendance directe au framework                  | Spring
+                    | Les classes ne connaissent pas le fichier XML Spring. Elles n’ont aucune dépendance directe au                            | framework Spring
+---------------------------------------------------------------------
+Refactoring		|	 Plus flexible 
+                |   Les changements d’implémentation se font dans le fichier XML sans modifier le code Java.
+--------------------------------------------------------------------------
+Configuration dynamique		|	Flexible
+                            |   Il n’y a que le fichier XML à modifier, ce qui permet de modifier le comportement de                                   | l’application sans recompiler.
 
-Refactoring		|	
-Configuration dynamique		|	
+
+
+Critère				| 	Annotations                       
+---------------------------------------------------------
+Lisibilité		|	Concise  
+                | La configuration est située directement sur le code concerné. Cela facilite la compréhension du rôle de                  | la classe.                 
+-------------------------------------------------------------------
+Couplage			|	Couplage plus fort  
+                    | Le code source dépend des imports des annotations. Les classes sont liées au framework Spring
+---------------------------------------------------------------------
+Refactoring		|	 Moins flexible 
+                |  Si on ajoute des implémentations, il faut rajouter @Qualifier 
+--------------------------------------------------------------------------
+Configuration dynamique		|	Statique
+                            | Le code doit être recompilé dans les différents fichiers où les annotations ont été changées.
 
 
 
@@ -84,12 +106,21 @@ Configuration dynamique		|
 
 1. En quoi Spring implémente-t-il l’IoC ?
 
+Spring implémente l’IoC via son Conteneur IoC (représenté par l’interface ApplicationContext). Celui-ci inverse le contrôle de l’application en prenant à sa charge la création, la configuration et l’assemblage des objets : les beans. Cela permet d’éviter que le code instancie manuellement ces dépendances avec le mot clé new. 
+
 
 2. Quelle différence entre IoC et DI ?
+
+La différence entre IoC et DI est la suivante :
+•	L’IoC (Inversion of Control) représente le principe général où le contrôle de la création et de la gestion des objets     est confié au conteneur.
+•	La DI (Dependency Injection) est le mécanisme qui permet d’injecter les dépendances dans un objet, soit par constructeur, soit par setter, soit par champ.
 
 
 3. Quel pattern GoF est utilisé implicitement ?
 
+Le pattern GoF utilisé implicitement est Factory. Spring agit comme une fabrique de beans : le conteneur fournit des objets déjà créés et configurés au programme, qui n’a jamais besoin de connaître la classe concrète ou de gérer l’instanciation.
+
 
 4. Pourquoi Spring favorise-t-il le constructor injection ?
 
+Spring favorise l’injection par constructeur car toutes les dépendances nécessaires au bon fonctionnement du bean doivent être fournies dès sa création. Si une dépendance est manquante, Spring refuse de créer le bean et renvoie une BeanCreationException, ce qui permet de détecter les erreurs dès le démarrage. La dépendance est ensuite figée et ne peut pas être modifiée accidentellement, contrairement à l’injection par setter. Avec l’injection par setter, la dépendance n’est pas obligatoire à la création du bean et peut être spécifiée ultérieurement. Cela offre plus de flexibilité, mais présente un risque d’oubli pouvant provoquer une NullPointerException lors de l’utilisation du bean. 
