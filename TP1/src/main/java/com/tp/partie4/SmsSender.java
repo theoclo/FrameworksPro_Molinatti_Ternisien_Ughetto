@@ -1,4 +1,4 @@
-package notificationSpring;
+package com.tp.partie4;
 
 import org.springframework.stereotype.Service;
 

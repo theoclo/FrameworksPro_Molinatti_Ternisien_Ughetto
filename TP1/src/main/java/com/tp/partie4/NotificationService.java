@@ -1,4 +1,4 @@
-package notificationSpring;
+package com.tp.partie4;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
