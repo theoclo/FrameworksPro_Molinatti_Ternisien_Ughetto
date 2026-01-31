@@ -18,6 +18,7 @@ buildNumber.properties
 
 ### VS Code ###
 .vscode/
+.vs
 
 ### Mac OS ###
 .DS_Store

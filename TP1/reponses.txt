@@ -119,6 +119,7 @@ La différence entre IoC et DI est la suivante :
 3. Quel pattern GoF est utilisé implicitement ?
 
 Le pattern GoF utilisé implicitement est Factory. Spring agit comme une fabrique de beans : le conteneur fournit des objets déjà créés et configurés au programme, qui n’a jamais besoin de connaître la classe concrète ou de gérer l’instanciation.
+On note aussi l'utilisation du pattern Singleton par défaut pour la gestion du cycle de vie des beans.
 
 
 4. Pourquoi Spring favorise-t-il le constructor injection ?

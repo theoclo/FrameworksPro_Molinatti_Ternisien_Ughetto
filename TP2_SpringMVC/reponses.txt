@@ -1,0 +1,79 @@
+TP2 : Développement d’une application Web avec Spring MVC
+
+
+
+---- Partie 1 – Architecture Spring MVC ----
+
+---- Partie 2 – Configuration Spring MVC (XML) ----
+	-- 2.1 Configuration du web.xml --
+
+Questions
+1. Quel est le rôle du DispatcherServlet ?
+
+C'est le composant central de l'architecture Spring MVC (le "Front Controller"). Il intercepte toutes les requêtes HTTP entrantes et s'occupe de les distribuer au bon contrôleur, puis de renvoyer la bonne vue à l'utilisateur.
+
+2. Pourquoi / et non /* ?
+
+Le pattern / indique que cette servlet gère toutes les requêtes par défaut, sauf celles qui ont déjà une extension spécifique (comme .jsp). Si on utilisait /*, le DispatcherServlet intercepterait absolument tout, y compris les appels internes vers les fichiers .jsp pour l'affichage, ce qui créerait une boucle ou une erreur car il essaierait de traiter la vue comme une nouvelle requête.
+
+
+	-- 2.2 Configuration Spring MVC --
+
+---- Partie 3 – Premier contrôleur Spring MVC ----
+	-- 3.1 Création du contrôleur --
+
+	-- 3.2 Création de la vue JSP --
+
+	-- 3.3 Test --
+
+Questions
+
+1. Pourquoi la JSP est-elle dans /WEB-INF ?
+
+C'est une bonne pratique de sécurité. Les fichiers placés dans le dossier /WEB-INF ne sont pas accessibles directement via une URL dans le navigateur. Cela oblige l'utilisateur à passer par le contrôleur (qui peut effectuer des traitements ou des vérifications) pour accéder à la page.
+
+
+2. Qui choisit la vue finale ?
+
+C'est le InternalResourceViewResolver configuré dans le fichier XML. Le contrôleur renvoie uniquement un "nom logique" (par exemple "home"), et le ViewResolver se charge de construire le chemin complet en ajoutant le préfixe (/WEB-INF/views/) et le suffixe (.jsp).
+
+
+---- Partie 4 – Passage de données (Model) ---- 
+	-- 4.1 Contrôleur avec modèle --
+	-- 4.2 Vue JSP --
+
+---- Partie 5 – Formulaire et requêtes POST ----
+	-- 5.1 Formulaire JSP --
+	-- 5.2 Contrôleur POST --
+	-- 5.3 Vue résultat --
+
+---- Partie 6 – Intégration avec le métier (IoC) ---- 
+	-- 6.1 Service métier --
+	-- 6.2 Injection dans le contrôleur --
+
+---- Partie 7 – Bonnes pratiques Spring MVC ----
+
+---- Partie 8 – Questions de réflexion ----
+
+1. Quel est le rôle exact du DispatcherServlet ?
+
+Il orchestre tout le flux de traitement : il reçoit la requête, identifie le bon contrôleur grâce aux mappings, récupère le modèle renvoyé par le contrôleur, et demande au ViewResolver de trouver la vue correspondante pour générer la réponse HTML.
+
+
+2. Pourquoi Spring MVC est-il basé sur Front Controller ?
+
+Ce pattern permet de centraliser toute la logique commune de traitement des requêtes (comme le routing, la gestion des erreurs ou la sécurité) en un seul point d'entrée, plutôt que de la dupliquer dans chaque Servlet individuelle.
+
+
+3. Où s’applique l’IoC dans Spring MVC ?
+
+L'Inversion de Contrôle s'applique principalement dans l'injection des dépendances au sein des contrôleurs. Par exemple, dans ce TP, le FormController a besoin du MessageService. Au lieu d'instancier le service avec new, on laisse Spring l'injecter via le constructeur annoté @Autowired.
+
+
+4. Différence entre @Controller et @Service ?
+
+Bien que techniquement ce soient tous les deux des composants gérés par Spring (beans), leurs rôles sont différents :
+
+	@Controller gère la couche Web : il reçoit les requêtes HTTP et orchestre la réponse.
+
+	@Service gère la couche Métier : il contient la logique pure de l'application (calculs, transformations de données) et ne se soucie pas du Web
