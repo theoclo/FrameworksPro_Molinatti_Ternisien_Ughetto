@@ -1,4 +1,4 @@
-package com.tp.partie4;
+package com.tp.partie3;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

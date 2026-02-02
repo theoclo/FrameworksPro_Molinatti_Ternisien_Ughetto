@@ -1,8 +1,8 @@
-package com.tp.partie4;
+package com.tp.partie3;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class EmailSender implements MessageSender {
     public void send(String message) {
         System.out.println("Email : " + message);
