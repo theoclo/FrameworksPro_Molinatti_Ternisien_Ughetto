@@ -1,0 +1,12 @@
+<ul>
+  @for (task of tasks; track task) {
+    <li>
+    <span [ngClass]="{ completed: task.completed }">
+{{ task.title }} -
+</span>
+    <button (click)="toggleTask(task)">{{ task.completed ? '✔️' : '❌' }}</button>
+    </li>
+  }
+</ul>
+<input [(ngModel)]="newTaskTitle" placeholder="Nouvelle tâche">
+<button (click)="addTask()">Ajouter</button>
